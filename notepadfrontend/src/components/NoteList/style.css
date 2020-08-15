@@ -1,0 +1,8 @@
+.note-list {
+    margin: 0;
+    padding: 0;
+    height: calc(100% - (35px + 36px + 3 * 8px));
+    overflow-y: auto;
+}
+
+

@@ -1,0 +1,35 @@
+p {
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    margin-left: 8px;
+}
+
+.note-title {
+    padding-top: 8px;  
+}
+
+.note-summary {
+    margin-top: 8px;
+    opacity: 80%;
+}
+
+.note-created-time {
+    margin-top: 10px;
+    opacity: 80%;
+}
+
+.note {
+    height: 100px;
+    cursor: pointer;
+}
+
+hr {
+    border: none;
+    background-color: #4b4946;
+    height: 1px;
+}
+
+.active {
+    background-color: #615e59;
+}
