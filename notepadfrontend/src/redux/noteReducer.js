@@ -1,4 +1,4 @@
-import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE } from './types'
+import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SAVE_CONTENT } from './types'
 import { EditorState, convertToRaw, Editor } from 'draft-js'
 
 const initialState = {
@@ -6,10 +6,19 @@ const initialState = {
         id: 1,
         creationTime: 3123,
         name: 'fasfd',
-        content: {
-            contentState: convertToRaw(EditorState.createEmpty().getCurrentContent()),
-            selectionState: EditorState.createEmpty().getSelection()
-        }
+        content: convertToRaw(EditorState.createEmpty().getCurrentContent())
+    },
+    {
+        id: 2,
+        creationTime: 3123,
+        name: 'erwrqs',
+        content: convertToRaw(EditorState.createEmpty().getCurrentContent())
+    },
+    {
+        id: 3,
+        creationTime: 3123,
+        name: 'xvcbxcv',
+        content: convertToRaw(EditorState.createEmpty().getCurrentContent())
     }],
     activeNoteId: -1
 }

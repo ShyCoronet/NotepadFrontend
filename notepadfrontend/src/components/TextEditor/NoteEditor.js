@@ -1,28 +1,24 @@
 import React, { useState } from 'react'
 import './style.css'
-import { changeNote } from '../../redux/actions'
-import { useDispatch, useSelector } from 'react-redux'
+import { changeNote, onSaveContent } from '../../redux/actions'
+import { useDispatch, useSelector, connect } from 'react-redux'
 import { BOLD, ITALIC, UNDERLINE } from './styleConst'
 import { Editor, convertToRaw, convertFromRaw, SelectionState, EditorState, ContentState, RichUtils } from 'draft-js'
 import 'draft-js/dist/Draft.css'
-import { createEditor } from './Tools/DraftContentTools'
-
 
 export default function NoteEditor({activeNote}) {
 
     const notes = useSelector(state => state.notes.notes)
+
+    let [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(activeNote.content)))
+
     const dispatch = useDispatch()
 
-    let editorState = createEditor(activeNote.content.contentState,
-        activeNote.content.selectionState)
-
-    function toggleStyle(styleType) {
-        dispatch(changeNote(notes,
-            {...activeNote, content: {
-                contentState: convertToRaw(RichUtils.toggleInlineStyle(editorState, styleType)
-                .getCurrentContent()),
-                selectionState: editorState.getSelection()
-            }}))
+    function toggleStyle(style) {
+        const editorStateWithStyle = RichUtils.toggleInlineStyle(editorState, style)
+        const rawContent = convertToRaw(editorStateWithStyle.getCurrentContent())
+        dispatch(changeNote(notes, {...activeNote, content: rawContent}))
+        setEditorState(editorStateWithStyle)
     }
 
     return(
@@ -31,7 +27,6 @@ export default function NoteEditor({activeNote}) {
                 <button onMouseDown={(e) => {
                     e.preventDefault()
                     toggleStyle(BOLD)
-                    console.log(editorState.getCurrentContent().getBlocksAsArray())
                 }}>B</button>
             </div>
             <div className='text-title'>
@@ -40,10 +35,9 @@ export default function NoteEditor({activeNote}) {
             </div>
             <div className='text-box'>
                 <Editor editorState={editorState} onChange={state => {
-                dispatch(changeNote(notes, {...activeNote, content: {
-                    contentState: convertToRaw(state.getCurrentContent()),
-                    selectionState: state.getSelection()
-                }}))
+                    const content = convertToRaw(state.getCurrentContent())
+                    dispatch(changeNote(notes, {...activeNote, content: content}))
+                    setEditorState(state)
                 }}/>
             </div>
         </div>

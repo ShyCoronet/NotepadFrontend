@@ -1,4 +1,4 @@
-import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE} from './types'
+import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SAVE_CONTENT} from './types'
 import { EditorState, convertToRaw} from 'draft-js'
 
 export function fetchNotes() {
@@ -22,10 +22,7 @@ export function createNote() {
                 {
                     name: 'Новая заметка',
                     creationTime: 'Только что',
-                    content: {
-                        contentState: convertToRaw(EditorState.createEmpty().getCurrentContent()),
-                        selectionState: EditorState.createEmpty().getSelection()
-                    }
+                    content: convertToRaw(EditorState.createWithContent().getCurrentContent())
                 }
             )
         }).then(response => response.json())

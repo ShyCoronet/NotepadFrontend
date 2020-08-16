@@ -12,7 +12,7 @@ export function selectionConverter(rawSelectionState) {
 
 export function createEditor(rawContent, rawSelection) {
     const editorStateWithContent = EditorState.createWithContent(convertFromRaw(rawContent))
-    const editorStateWithContentAndSelection = EditorState.forceSelection(editorStateWithContent,
+    const editorStateWithContentAndSelection = EditorState.acceptSelection(editorStateWithContent,
         selectionConverter(rawSelection))
     return editorStateWithContentAndSelection
 }
