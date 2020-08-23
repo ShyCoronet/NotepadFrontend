@@ -1,28 +1,37 @@
-import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SAVE_CONTENT} from './types'
+import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SET_TOKEN } from './types'
 import { EditorState, convertToRaw} from 'draft-js'
 
-export function fetchNotes() {
+export function fetchNotes(token) {
     return async dispatch => {
-        await fetch('https://localhost:44321/api/notes')
-                .then(response => response.json())
-                .then(notes => dispatch({
-                    type: FETCH_NOTES, payload: notes
+        await fetch('https://localhost:44321/api/notes', 
+        {
+            method: 'GET',
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Content-type' : 'application/json'
+            }
+        }).then(response => response.json())
+            .then(notes => dispatch({
+                type: FETCH_NOTES, payload: notes
                 }))
     }
 }
 
 
-export function createNote() {
+export function createNote(token) {
     return async dispatch => {
         await fetch('https://localhost:44321/api/note',
         {
             method: 'POST',
-            headers: {'Content-type' : 'application/json'},
+            headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Content-type' : 'application/json'
+            },
             body: JSON.stringify(
                 {
                     name: 'Новая заметка',
                     creationTime: 'Только что',
-                    content: convertToRaw(EditorState.createWithContent().getCurrentContent())
+                    content: convertToRaw(EditorState.createEmpty().getCurrentContent())
                 }
             )
         }).then(response => response.json())
@@ -48,5 +57,11 @@ export function changeNote(noteState, activeNote) {
     })
     return {
         type: CHANGE_NOTE, payload: newStaet
+    }
+}
+
+export function setToken(token) {
+    return {
+        type: SET_TOKEN, payload: token
     }
 }

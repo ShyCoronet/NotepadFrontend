@@ -37,5 +37,35 @@
 }
 
 .tool-bar {
+    margin-top: 2px;
+    margin-left: 5px;
     background-color: #19191e;
+    height: 45px;
+    width: calc(100% - 11px)
+}
+
+.tool-btn {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #615e59;
+    color: #ceced0;
+    height: 35px;
+    width: 40px;
+    border-radius: 6px;
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: large;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.underline {
+    text-decoration: underline;
 }

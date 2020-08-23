@@ -6,6 +6,9 @@ import SearchBar from './components/SearchBar/SearchBar';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchNotes } from './redux/actions';
 import NoteEditor from './components/TextEditor/NoteEditor'
+import { Switch, BrowserRouter, Route } from 'react-router-dom'
+import Login from './components/Login/Login';
+import RegistrationForm from './components/RegistrationForm/RegistrationForm';
 
 
 function App() {
@@ -18,13 +21,16 @@ function App() {
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
-  useEffect(() => {
-    dispatch(fetchNotes())
-  }, [])
+  const token = useSelector(state => state.notes.token)
+
+  
 
   return (
     <div className='container'>
-      <div className='header'>
+      <BrowserRouter>
+        <Switch>
+          <Route path='/home'>
+          <div className='header'>
         <h1 className='title'>Notepad</h1>
       </div>
       <div className='main'>
@@ -36,6 +42,11 @@ function App() {
         </div>
           {activeNoteId !== -1 ? <NoteEditor key={activeNote.id} activeNote={activeNote}/> : <div></div>}
       </div>
+          </Route>
+          <Route path='/login' component={Login}/>
+          <Route path='/registration' component={RegistrationForm}/>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
