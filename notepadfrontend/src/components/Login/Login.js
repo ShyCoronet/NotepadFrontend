@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './style.css'
 import { Redirect } from 'react-router-dom'
 import { setToken } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
@@ -22,17 +23,17 @@ export default function Login() {
         }).then(response => {
             if (response.ok) {
                 return response.json()
+                .then(token => {
+                    dispath(setToken(token))
+                    setRedirect(<Redirect to='notepad'/>)
+                })
             }
-        })
-        .then(token => {
-            dispath(setToken(token))
-            setRedirect(<Redirect to='home'/>)
         })
     }
 
 
     return(
-        <div>
+        <div class='login-form'>
             <input type='text' value={userData.login} onChange={e => 
                 setUserData({...userData, login: e.target.value})}></input>
             <input type='text' value={userData.password} onChange={e => 

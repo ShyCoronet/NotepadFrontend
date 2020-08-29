@@ -10,7 +10,7 @@ export default function CreateNoteButton() {
     const token = useSelector(state => state.notes.token)
 
     return(
-        <button className='create-btn' onClick={() => dispatch(createNote(token.access_token))}>
+        <button className='create-btn' onClick={() => dispatch(createNote(token.access_token, token.login))}>
             <b>New note</b>
         </button>
     )

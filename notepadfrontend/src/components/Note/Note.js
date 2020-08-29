@@ -1,11 +1,16 @@
 import React from 'react'
 import './style.css'
-import { convertFromRaw } from 'draft-js'
+import { convertFromHTML, ContentState } from 'draft-js'
 
 export default function Note ({note, addedClass, actived}) {
 
     const name = note.name.trim()
-    const summary = convertFromRaw(note.content).getPlainText(' ')
+    const blocksFromHtml = convertFromHTML(note.content)
+    const contentState = ContentState.createFromBlockArray(
+        blocksFromHtml.contentBlocks,
+        blocksFromHtml.entityMap
+    )
+    const summary = contentState.getPlainText(' ')
 
     return(
         <li className={'note' + addedClass} onClick={actived}>
@@ -15,7 +20,7 @@ export default function Note ({note, addedClass, actived}) {
             <p className='note-summary'>{summary === ''
                 ? 'Пусто' : summary.length > 30
                 ? summary.slice(0, 30) + '....' : summary}</p>
-            <p className='note-created-time'>{note.creationTime}</p>
+            <p className='note-created-time'>{note.creationDateTime}</p>
             <hr></hr>
         </li>
     )

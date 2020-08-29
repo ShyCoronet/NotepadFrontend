@@ -1,5 +1,4 @@
 import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SET_TOKEN } from './types'
-import { EditorState, convertToRaw} from 'draft-js'
 
 export function fetchNotes(token) {
     return async dispatch => {
@@ -18,7 +17,7 @@ export function fetchNotes(token) {
 }
 
 
-export function createNote(token) {
+export function createNote(token, login) {
     return async dispatch => {
         await fetch('https://localhost:44321/api/note',
         {
@@ -27,13 +26,7 @@ export function createNote(token) {
                 'Authorization' : `Bearer ${token}`,
                 'Content-type' : 'application/json'
             },
-            body: JSON.stringify(
-                {
-                    name: 'Новая заметка',
-                    creationTime: 'Только что',
-                    content: convertToRaw(EditorState.createEmpty().getCurrentContent())
-                }
-            )
+            body: JSON.stringify(login)
         }).then(response => response.json())
             .then(note => dispatch({
                 type: ADD_NOTE, payload: note
@@ -49,7 +42,7 @@ export function setActiveNote(id) {
 
 export function changeNote(noteState, activeNote) {
     let newStaet = noteState.map(note => {
-        if (note.id === activeNote.id) {
+        if (note.noteId === activeNote.noteId) {
             note.name = activeNote.name
             note.content = activeNote.content
         }

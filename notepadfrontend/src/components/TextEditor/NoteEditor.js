@@ -3,7 +3,7 @@ import './style.css'
 import { changeNote } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { BOLD, ITALIC, UNDERLINE } from './styleConst'
-import { Editor, convertToRaw, convertFromRaw, EditorState, RichUtils } from 'draft-js'
+import { Editor, EditorState, RichUtils, convertFromHTML, ContentState } from 'draft-js'
 import 'draft-js/dist/Draft.css'
 import debounce from 'lodash/debounce'
 import { stateToHTML } from 'draft-js-export-html'
@@ -12,15 +12,19 @@ export default function NoteEditor({activeNote}) {
 
     const notes = useSelector(state => state.notes.notes)
 
-    const token = useSelector(state => state.notes.token.access_token)
-
-    let [editorState, setEditorState] = useState(EditorState.createWithContent(convertFromRaw(activeNote.content)))
+    const token = useSelector(state => state.notes.token)
+    const blocksFromHtml = convertFromHTML(activeNote.content)
+    const contentState = ContentState.createFromBlockArray(
+        blocksFromHtml.contentBlocks,
+        blocksFromHtml.entityMap
+    )
+    let [editorState, setEditorState] = useState(EditorState.createWithContent(contentState))
 
     const dispatch = useDispatch()
 
     function toggleStyle(style) {
         const editorStateWithStyle = RichUtils.toggleInlineStyle(editorState, style)
-        const rawContent = convertToRaw(editorStateWithStyle.getCurrentContent())
+        const rawContent = stateToHTML(editorStateWithStyle.getCurrentContent())
         const updatedNote = {...activeNote, content: rawContent}
         onSaveToServer(updatedNote)
         dispatch(changeNote(notes, updatedNote, token))
@@ -86,7 +90,7 @@ export default function NoteEditor({activeNote}) {
             </div>
             <div className='text-box'>
                 <Editor editorState={editorState} onChange={state => {
-                    const rawContent = convertToRaw(state.getCurrentContent())
+                    const rawContent = stateToHTML(state.getCurrentContent())
                     const updatedNote = {...activeNote, content: rawContent}
                     onSaveToServer(updatedNote)
                     dispatch(changeNote(notes, updatedNote, token))

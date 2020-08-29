@@ -1,22 +1,20 @@
 import React from 'react'
 import './style.css'
 import Note from '../Note/Note'
-import { useSelector, useDispatch } from 'react-redux'
 import { setActiveNote } from '../../redux/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
-const NoteList = () => {
 
-    const notes = useSelector(state => state.notes.notes)
-    const activeNoteId = useSelector(state => state.notes.activeNoteId)
+export default function NoteList({notes}) {
+
     const dispatch = useDispatch()
-    
+    const activeNoteId = useSelector(state => state.notes.activeNoteId)
+
     return(
         <ul className='note-list'>
-            {notes.map(note => <Note key={note.id} id={note.id} note={note}
-            actived={() => dispatch(setActiveNote(note.id))}
-            addedClass={activeNoteId === note.id ? ' active': ''}/>)}
+            {notes.map(note => <Note key={note.noteId} id={note.noteId} note={note}
+            actived={() => dispatch(setActiveNote(note.noteId))}
+            addedClass={activeNoteId === note.noteId ? ' active': ''}/>)}
         </ul>
     )
-} 
-
-export default NoteList
+}

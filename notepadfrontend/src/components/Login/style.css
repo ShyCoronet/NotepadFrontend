@@ -1,0 +1,11 @@
+.login-form {
+    top: 30%;
+    left: 38%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: #323337;
+    height: 30%;
+    width: 30%;
+}

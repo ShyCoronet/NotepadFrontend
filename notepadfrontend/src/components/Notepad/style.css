@@ -1,0 +1,38 @@
+.notepad {
+    height: 100%;
+}
+
+.header {
+    background-color: #111114;
+    height: 60px;
+    width: 100%;
+    box-shadow: 0 0 5px #323337;
+}
+  
+.title {
+    margin: 0;
+    padding-top: 5px;
+    margin-left: 5px;
+    color: #ceced0;
+    height: 10%;
+}
+
+.main {
+    display: flex;
+    height: 95%;
+}
+
+.side-bar {
+    background-color:#19191e;
+    margin-top: 2px;
+    height: calc(100% - margin-top);
+    width: 350px;
+    flex-shrink: 0;
+}
+  
+.separator {
+    margin: 0;
+    border: none;
+    background-color: #060607;
+    height: 1px;
+}
