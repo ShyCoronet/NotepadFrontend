@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import './style.css'
-import { Redirect } from 'react-router-dom'
-import { setToken } from '../../redux/actions'
-import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { saveTokenData } from '../../AuthenticationFetch'
 
 export default function Login() {
 
@@ -11,11 +10,9 @@ export default function Login() {
         password: ''
     })
 
-    let [redirect, setRedirect] = useState(null)
-
-    const dispath = useDispatch()
+    let history = useHistory()
     
-    function send() {
+    function Login() {
         fetch('https://localhost:44321/api/token', {
             method: 'POST',
             headers: {'Content-type' : 'application/json'},
@@ -24,8 +21,8 @@ export default function Login() {
             if (response.ok) {
                 return response.json()
                 .then(token => {
-                    dispath(setToken(token))
-                    setRedirect(<Redirect to='notepad'/>)
+                    saveTokenData(token)
+                    history.push('/notepad')
                 })
             }
         })
@@ -38,8 +35,7 @@ export default function Login() {
                 setUserData({...userData, login: e.target.value})}></input>
             <input type='text' value={userData.password} onChange={e => 
                 setUserData({...userData, password: e.target.value})}></input>
-            <button type='submit' onClick={() => send()}></button>
-            {redirect}
+            <button type='submit' onClick={() => Login()}></button>
         </div>
     )
 }

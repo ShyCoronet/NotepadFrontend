@@ -1,10 +1,9 @@
-import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SET_TOKEN} from './types'
+import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, DELETE_NOTE } from './types'
 
 
 const initialState = {
     notes: [],
-    activeNoteId: -1,
-    token: null
+    activeNoteId: null,
 }
 
 export const notesReducer = (state = initialState, action) => {
@@ -13,12 +12,12 @@ export const notesReducer = (state = initialState, action) => {
             return {...state, notes: action.payload}
         case ADD_NOTE:
             return {...state, notes: state.notes.concat([action.payload])}
+        case DELETE_NOTE:
+            return {...state, notes: state.notes.filter(note => note.noteId !== action.payload)}
         case CHANGE_NOTE:
             return {...state, notes: action.payload}
         case SET_ACTIVE_NOTE:
             return {...state, activeNoteId: action.payload}
-        case SET_TOKEN:
-            return {...state, token: action.payload}
         default: return state
     }
 }

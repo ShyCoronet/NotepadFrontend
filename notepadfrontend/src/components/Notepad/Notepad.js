@@ -6,6 +6,7 @@ import NoteEditor from '../TextEditor/NoteEditor'
 import NoteList from '../NoteList/NoteList'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchNotes } from '../../redux/actions'
+import { useHistory } from 'react-router-dom'
 
 
 export default function Notepad() {
@@ -14,10 +15,10 @@ export default function Notepad() {
     const notes = useSelector(state => state.notes.notes)
     const activeNoteId = useSelector(state => state.notes.activeNoteId)
     const activeNote = notes.find(note => note.noteId === activeNoteId)
-    const token = useSelector(state => state.notes.token)
+    let history = useHistory()
     
     useEffect(() => {
-        dispatch(fetchNotes(token))
+        dispatch(fetchNotes(history))
     }, [])
     
     return(
@@ -32,7 +33,7 @@ export default function Notepad() {
                     <hr className="separator"></hr>
                     <NoteList notes={notes}/>
                 </div>
-            {activeNoteId !== -1
+            {activeNote !== undefined
             ? <NoteEditor key={activeNote.noteId} 
             activeNote={activeNote}/> 
             : <div></div>}

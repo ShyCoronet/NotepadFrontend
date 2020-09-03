@@ -1,15 +1,13 @@
-import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SET_TOKEN } from './types'
+import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SET_TOKEN, DELETE_NOTE } from './types'
+import { fetchWithAuth } from '../AuthenticationFetch'
 
-export function fetchNotes(token) {
+export function fetchNotes(history) {
     return async dispatch => {
-        await fetch('https://localhost:44321/api/notes', 
+        await fetchWithAuth('https://localhost:44321/api/notes', 
         {
             method: 'GET',
-            headers: {
-                'Authorization' : `Bearer ${token}`,
-                'Content-type' : 'application/json'
-            }
-        }).then(response => response.json())
+            headers: {'Content-Type' : 'application/json'}
+        }, history).then(response => response.json())
             .then(notes => dispatch({
                 type: FETCH_NOTES, payload: notes
                 }))
@@ -17,22 +15,32 @@ export function fetchNotes(token) {
 }
 
 
-export function createNote(token, login) {
+export function createNote(history) {
     return async dispatch => {
-        await fetch('https://localhost:44321/api/note',
+        await fetchWithAuth('https://localhost:44321/api/note',
         {
             method: 'POST',
-            headers: {
-                'Authorization' : `Bearer ${token}`,
-                'Content-type' : 'application/json'
-            },
-            body: JSON.stringify(login)
-        }).then(response => response.json())
+            headers: {'Content-type' : 'application/json'},
+        }, history).then(response => response.json())
             .then(note => dispatch({
                 type: ADD_NOTE, payload: note
-            }))}
+            }))
+    }
 }
 
+export function deleteNote(noteId, history) {
+    return async dispatch => {
+        await fetchWithAuth('https://localhost:44321/api/note', 
+        {
+            method: 'DELETE',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify(noteId)
+        }, history).then(response => response.json())
+            .then(id => {
+                dispatch({type: DELETE_NOTE, payload: id})
+            })
+    }
+}
 
 export function setActiveNote(id) {
     return {
@@ -41,7 +49,7 @@ export function setActiveNote(id) {
 }
 
 export function changeNote(noteState, activeNote) {
-    let newStaet = noteState.map(note => {
+    let newNotesState = noteState.map(note => {
         if (note.noteId === activeNote.noteId) {
             note.name = activeNote.name
             note.content = activeNote.content
@@ -49,12 +57,6 @@ export function changeNote(noteState, activeNote) {
         return note
     })
     return {
-        type: CHANGE_NOTE, payload: newStaet
-    }
-}
-
-export function setToken(token) {
-    return {
-        type: SET_TOKEN, payload: token
+        type: CHANGE_NOTE, payload: newNotesState
     }
 }

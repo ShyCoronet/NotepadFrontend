@@ -6,12 +6,12 @@ p {
 }
 
 .note-title {
-    padding-top: 8px;  
+    padding-top: 8px;
 }
 
 .note-summary {
     margin-top: 8px;
-    opacity: 80%;
+    opacity: 100%;
 }
 
 .note-created-time {
@@ -32,4 +32,16 @@ hr {
 
 .active {
     background-color: #615e59;
+}
+
+.bi-trash {
+    float: right;
+    margin-right: 5px;
+}
+
+.delete {
+    float: right;
+    background-color: rgba(255, 255, 255, 0);
+    outline: none;
+    border: none;
 }

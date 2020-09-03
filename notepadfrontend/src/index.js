@@ -7,6 +7,8 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import { rootReducer } from './redux/rootReducer';
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import { createBrowserHistory } from 'history';
+import { Router, useHistory, Route, BrowserRouter } from 'react-router-dom';
 
 const store = createStore(rootReducer, compose(applyMiddleware(
   thunk
@@ -16,9 +18,11 @@ const store = createStore(rootReducer, compose(applyMiddleware(
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App/>
-    </Provider>
+    <BrowserRouter>
+        <Provider store={store}>
+          <App/>
+        </Provider>
+    </BrowserRouter>    
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -7,6 +7,7 @@ import { Editor, EditorState, RichUtils, convertFromHTML, ContentState } from 'd
 import 'draft-js/dist/Draft.css'
 import debounce from 'lodash/debounce'
 import { stateToHTML } from 'draft-js-export-html'
+import { fetchWithAuth } from '../../AuthenticationFetch'
 
 export default function NoteEditor({activeNote}) {
 
@@ -44,11 +45,10 @@ export default function NoteEditor({activeNote}) {
     }
 
     const onSaveToServer = debounce((updatedNote) => {
-        fetch('https://localhost:44321/api/note', 
+        fetchWithAuth('https://localhost:44321/api/note', 
         {
             method: 'PUT',
-            headers: {'Authorization' : `Bearer ${token}`,
-            'Content-type' : 'application/json'},
+            headers: {'Content-type' : 'application/json'},
             body: JSON.stringify(updatedNote)
         })
     }, 1000)
@@ -57,15 +57,6 @@ export default function NoteEditor({activeNote}) {
     return(
         <div className='text-editor'>
             <div className='tool-bar'>
-                <select>
-                    <option>8</option>
-                    <option>10</option>
-                    <option>12</option>
-                    <option>14</option>
-                    <option>18</option>
-                    <option>24</option>
-                    <option>36</option>
-                </select>
                 <button className='tool-btn bold' onMouseDown={(e) => {
                     e.preventDefault()
                     toggleStyle(BOLD)
@@ -81,7 +72,7 @@ export default function NoteEditor({activeNote}) {
             </div>
             <div className='text-title'>
                 <input type='text' className='text-title-field' 
-                placeholder='Введите название' value={activeNote.name}
+                placeholder='Enter the title' value={activeNote.name}
                 onChange={event => {
                     const updatedNote = {...activeNote, name: event.target.value}
                     onSaveToServer(updatedNote)
