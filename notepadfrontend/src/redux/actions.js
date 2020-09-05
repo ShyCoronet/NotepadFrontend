@@ -1,4 +1,4 @@
-import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, SET_TOKEN, DELETE_NOTE } from './types'
+import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, DELETE_NOTE } from './types'
 import { fetchWithAuth } from '../AuthenticationFetch'
 
 export function fetchNotes(history) {

@@ -40,6 +40,27 @@ async function refreshTokenData(refreshToken) {
     })
 }
 
-export function saveTokenData(tokenData){
+export function saveTokenData(tokenData) {
     localStorage.setItem('tokenData', JSON.stringify(tokenData))
+}
+
+function getTokenDataOrDefault() {
+    let tokenData = null
+
+    if (localStorage.tokenData) {
+        tokenData = JSON.parse(localStorage.tokenData)
+    }
+
+    return tokenData
+}
+
+
+function checkingTokenLifeTime(lifeTime) {
+    let isAlive = true
+    
+    if (Date.now() >= lifeTime * 1000) {
+        isAlive = false
+    }
+
+    return isAlive
 }

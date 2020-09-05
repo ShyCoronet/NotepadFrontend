@@ -1,6 +1,6 @@
 import React from 'react'
 import './style.css'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { createNote } from '../../redux/actions'
 import { useHistory } from 'react-router-dom'
 

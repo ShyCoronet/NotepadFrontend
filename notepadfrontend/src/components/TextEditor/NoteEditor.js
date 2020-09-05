@@ -32,18 +32,6 @@ export default function NoteEditor({activeNote}) {
         setEditorState(editorStateWithStyle)
     }
 
-    function onSaveServer(updatedNote) {
-        debounce(() => {
-            fetch('https://localhost:44321/api/note', 
-            {
-                method: 'PUT',
-                headers: {'Authorization' : `Bearer ${token}`,
-                'Content-type' : 'application/json'},
-                body: JSON.stringify(updatedNote)
-            })
-        }, 1000)
-    }
-
     const onSaveToServer = debounce((updatedNote) => {
         fetchWithAuth('https://localhost:44321/api/note', 
         {

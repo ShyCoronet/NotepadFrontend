@@ -30,7 +30,7 @@ export default function Login() {
 
 
     return(
-        <div class='login-form'>
+        <div className='login-form'>
             <input type='text' value={userData.login} onChange={e => 
                 setUserData({...userData, login: e.target.value})}></input>
             <input type='text' value={userData.password} onChange={e => 
