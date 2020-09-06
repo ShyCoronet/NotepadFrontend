@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './style.css'
 import { updateNote } from '../../redux/actions'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { BOLD, ITALIC, UNDERLINE } from './styleConst'
 import { Editor, EditorState, RichUtils, convertFromHTML, ContentState } from 'draft-js'
 import 'draft-js/dist/Draft.css'
