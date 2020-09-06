@@ -9,7 +9,7 @@ export function* sagaWatcher() {
    yield takeEvery(REQUEST_NOTES, getNotes)
    yield takeEvery(REQUEST_NOTE, getNote)
    yield takeEvery(REQUEST_FOR_DELETE_NOTE, deleteNote)
-   yield debounce(1000, REQUEST_FOR_UPDATE_NOTE, updateNote)
+   yield debounce(500, REQUEST_FOR_UPDATE_NOTE, updateNote)
 }
 
 function* getNotes() {
