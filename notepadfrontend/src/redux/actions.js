@@ -1,44 +1,20 @@
-import { FETCH_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, CHANGE_NOTE, DELETE_NOTE } from './types'
-import { fetchWithAuth } from '../AuthenticationFetch'
+import { SET_ACTIVE_NOTE, REQUEST_FOR_DELETE_NOTE, REQUEST_NOTES, REQUEST_NOTE, REQUEST_FOR_UPDATE_NOTE } from './types'
 
-export function fetchNotes(history) {
-    return async dispatch => {
-        await fetchWithAuth('https://localhost:44321/api/notes', 
-        {
-            method: 'GET',
-            headers: {'Content-Type' : 'application/json'}
-        }, history).then(response => response.json())
-            .then(notes => dispatch({
-                type: FETCH_NOTES, payload: notes
-                }))
+export function getNotes() {
+    return {
+        type: REQUEST_NOTES
     }
 }
 
-
-export function createNote(history) {
-    return async dispatch => {
-        await fetchWithAuth('https://localhost:44321/api/note',
-        {
-            method: 'POST',
-            headers: {'Content-type' : 'application/json'},
-        }, history).then(response => response.json())
-            .then(note => dispatch({
-                type: ADD_NOTE, payload: note
-            }))
+export function addNote() {
+    return {
+        type: REQUEST_NOTE
     }
 }
 
-export function deleteNote(noteId, history) {
-    return async dispatch => {
-        await fetchWithAuth('https://localhost:44321/api/note', 
-        {
-            method: 'DELETE',
-            headers: {'Content-type' : 'application/json'},
-            body: JSON.stringify(noteId)
-        }, history).then(response => response.json())
-            .then(id => {
-                dispatch({type: DELETE_NOTE, payload: id})
-            })
+export function deleteNote(noteId) {
+    return {
+        type: REQUEST_FOR_DELETE_NOTE, noteId
     }
 }
 
@@ -48,15 +24,8 @@ export function setActiveNote(id) {
     }
 }
 
-export function changeNote(noteState, activeNote) {
-    let newNotesState = noteState.map(note => {
-        if (note.noteId === activeNote.noteId) {
-            note.name = activeNote.name
-            note.content = activeNote.content
-        }
-        return note
-    })
+export function updateNote(updatedNote) {
     return {
-        type: CHANGE_NOTE, payload: newNotesState
+        type: REQUEST_FOR_UPDATE_NOTE, updatedNote
     }
 }

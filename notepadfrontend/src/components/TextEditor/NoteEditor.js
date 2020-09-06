@@ -1,46 +1,31 @@
 import React, { useState } from 'react'
 import './style.css'
-import { changeNote } from '../../redux/actions'
+import { updateNote } from '../../redux/actions'
 import { useDispatch, useSelector } from 'react-redux'
 import { BOLD, ITALIC, UNDERLINE } from './styleConst'
 import { Editor, EditorState, RichUtils, convertFromHTML, ContentState } from 'draft-js'
 import 'draft-js/dist/Draft.css'
-import debounce from 'lodash/debounce'
 import { stateToHTML } from 'draft-js-export-html'
-import { fetchWithAuth } from '../../AuthenticationFetch'
 
 export default function NoteEditor({activeNote}) {
 
-    const notes = useSelector(state => state.notes.notes)
-
-    const token = useSelector(state => state.notes.token)
     const blocksFromHtml = convertFromHTML(activeNote.content)
     const contentState = ContentState.createFromBlockArray(
         blocksFromHtml.contentBlocks,
         blocksFromHtml.entityMap
     )
-    let [editorState, setEditorState] = useState(EditorState.createWithContent(contentState))
+    let [editorTitleState, setEditorTitleState] = useState(activeNote.name)
+    let [editorTextState, setEditorTextState] = useState(EditorState.createWithContent(contentState))
 
     const dispatch = useDispatch()
 
     function toggleStyle(style) {
-        const editorStateWithStyle = RichUtils.toggleInlineStyle(editorState, style)
+        const editorStateWithStyle = RichUtils.toggleInlineStyle(editorTextState, style)
         const rawContent = stateToHTML(editorStateWithStyle.getCurrentContent())
         const updatedNote = {...activeNote, content: rawContent}
-        onSaveToServer(updatedNote)
-        dispatch(changeNote(notes, updatedNote, token))
-        setEditorState(editorStateWithStyle)
-    }
-
-    const onSaveToServer = debounce((updatedNote) => {
-        fetchWithAuth('https://localhost:44321/api/note', 
-        {
-            method: 'PUT',
-            headers: {'Content-type' : 'application/json'},
-            body: JSON.stringify(updatedNote)
-        })
-    }, 1000)
-    
+        dispatch(updateNote(updatedNote))
+        setEditorTextState(editorStateWithStyle)
+    }    
 
     return(
         <div className='text-editor'>
@@ -60,20 +45,19 @@ export default function NoteEditor({activeNote}) {
             </div>
             <div className='text-title'>
                 <input type='text' className='text-title-field' 
-                placeholder='Enter the title' value={activeNote.name}
+                placeholder='Enter the title' value={editorTitleState}
                 onChange={event => {
                     const updatedNote = {...activeNote, name: event.target.value}
-                    onSaveToServer(updatedNote)
-                    dispatch(changeNote(notes, updatedNote, token))
+                    dispatch(updateNote(updatedNote))
+                    setEditorTitleState(event.target.value)
                 }}></input>
             </div>
             <div className='text-box'>
-                <Editor editorState={editorState} onChange={state => {
+                <Editor editorState={editorTextState} onChange={state => {
                     const rawContent = stateToHTML(state.getCurrentContent())
                     const updatedNote = {...activeNote, content: rawContent}
-                    onSaveToServer(updatedNote)
-                    dispatch(changeNote(notes, updatedNote, token))
-                    setEditorState(state)
+                    dispatch(updateNote(updatedNote))
+                    setEditorTextState(state)
                 }}/>
             </div>
         </div>
