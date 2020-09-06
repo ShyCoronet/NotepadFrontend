@@ -5,8 +5,7 @@ import SearchBar from '../SearchBar/SearchBar'
 import NoteEditor from '../TextEditor/NoteEditor'
 import NoteList from '../NoteList/NoteList'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchNotes } from '../../redux/actions'
-import { useHistory } from 'react-router-dom'
+import { getNotes } from '../../redux/actions'
 
 
 export default function Notepad() {
@@ -15,10 +14,10 @@ export default function Notepad() {
     const notes = useSelector(state => state.notes.notes)
     const activeNoteId = useSelector(state => state.notes.activeNoteId)
     const activeNote = notes.find(note => note.noteId === activeNoteId)
-    let history = useHistory()
-    
+
+
     useEffect(() => {
-        dispatch(fetchNotes(history))
+        dispatch(getNotes())
     }, [])
     
     return(
