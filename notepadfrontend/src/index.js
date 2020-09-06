@@ -8,12 +8,18 @@ import { rootReducer } from './redux/rootReducer';
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { BrowserRouter } from 'react-router-dom';
+import createSagaMiddleware from 'redux-saga'
+import { sagaWatcher } from './saga/sagas';
+
+const saga = createSagaMiddleware()
 
 const store = createStore(rootReducer, compose(applyMiddleware(
-  thunk
+  thunk, saga
 ),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 ))
+
+saga.run(sagaWatcher)
 
 ReactDOM.render(
   <React.StrictMode>
