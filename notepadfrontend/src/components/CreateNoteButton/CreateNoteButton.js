@@ -1,17 +1,14 @@
 import React from 'react'
 import './style.css'
 import { useDispatch } from 'react-redux'
-import { createNote } from '../../redux/actions'
-import { useHistory } from 'react-router-dom'
+import { addNote } from '../../redux/actions'
 
 export default function CreateNoteButton() {
     
     const dispatch = useDispatch()
 
-    const history = useHistory()
-
     return(
-        <button className='create-btn' onClick={() => dispatch(createNote(history))}>
+        <button className='create-btn' onClick={() => dispatch(addNote())}>
             <b>New note</b>
         </button>
     )

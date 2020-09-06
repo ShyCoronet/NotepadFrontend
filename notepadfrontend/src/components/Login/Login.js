@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './style.css'
 import { useHistory } from 'react-router-dom'
-import { saveTokenData } from '../../AuthenticationFetch'
+import { saveTokenData } from '../../Authentication'
 
 export default function Login() {
 

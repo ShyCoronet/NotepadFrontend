@@ -2,7 +2,6 @@ import React from 'react'
 import './style.css'
 import { convertFromHTML, ContentState } from 'draft-js'
 import { useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
 import { deleteNote } from '../../redux/actions'
 
 export default function Note ({note, addedClass, actived}) {
@@ -16,7 +15,6 @@ export default function Note ({note, addedClass, actived}) {
     const summary = contentState.getPlainText(' ')
 
     const dispath = useDispatch()
-    let history = useHistory()
 
     return(
         <li className={'note' + addedClass} onClick={actived}>
@@ -24,7 +22,7 @@ export default function Note ({note, addedClass, actived}) {
                 ? 'Без названия' : name.length > 30
                 ? name.slice(0, 30) + '....' : name}</p>
             <button className='delete' onClick={(e) => {
-                dispath(deleteNote(note.noteId, history))
+                dispath(deleteNote(note.noteId))
                 e.stopPropagation()
             }}>
                 <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" className="bi bi-trash" fill="#ceced0" xmlns="http://www.w3.org/2000/svg">
