@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: #060607;
+  background-color: #111114;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -19,6 +19,19 @@ body {
 .container {
   height: 100%;
   width: 100%;
+}
+
+.btn {
+  color: #ceced0;
+  background-color: #615e59;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.inpt:focus {
+  box-shadow: 0 0 0 3px #4c5a70;
 }
 
 code {
