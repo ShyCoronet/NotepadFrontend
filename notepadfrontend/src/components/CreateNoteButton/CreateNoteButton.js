@@ -8,7 +8,7 @@ export default function CreateNoteButton() {
     const dispatch = useDispatch()
 
     return(
-        <button className='create-btn' onClick={() => dispatch(addNote())}>
+        <button className='btn create-btn' onClick={() => dispatch(addNote())}>
             <b>New note</b>
         </button>
     )
