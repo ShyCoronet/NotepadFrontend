@@ -1,10 +1,11 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import './style.css'
 import { convertFromHTML, ContentState } from 'draft-js'
 import { useDispatch } from 'react-redux'
 import { deleteNote } from '../../redux/actions'
+import { formatDistance } from 'date-fns'
 
-export default function Note ({note, addedClass, actived}) {
+export default function Note ({note, addedClass, active}) {
 
     const name = note.name.trim()
     const blocksFromHtml = convertFromHTML(note.content)
@@ -14,15 +15,31 @@ export default function Note ({note, addedClass, actived}) {
     )
     const summary = contentState.getPlainText(' ')
 
-    const dispath = useDispatch()
+    const dispatch = useDispatch()
+
+    const dateOptions = {
+        addSuffix : true
+    }
+
+    let [creationTime, setTime] = useState(formatDistance(Date.parse(note.creationDateTime), new Date(), dateOptions))
+
+    function Timer() {
+        setInterval(() => {
+            setTime(formatDistance(Date.parse(note.creationDateTime), new Date(), dateOptions))
+        }, 60000)
+    }
+
+    useEffect(() => {
+        Timer()
+    }, [])
 
     return(
-        <li className={'note' + addedClass} onClick={actived}>
+        <li className={'note' + addedClass} onClick={active}>
             <p className='note-title'>{name === ''
                 ? 'Без названия' : name.length > 30
                 ? name.slice(0, 30) + '....' : name}</p>
             <button className='delete' onClick={(e) => {
-                dispath(deleteNote(note.noteId))
+                dispatch(deleteNote(note.noteId))
                 e.stopPropagation()
             }}>
                 <svg width="1.7em" height="1.7em" viewBox="0 0 16 16" className="bi bi-trash" fill="#ceced0" xmlns="http://www.w3.org/2000/svg">
@@ -33,8 +50,8 @@ export default function Note ({note, addedClass, actived}) {
             <p className='note-summary'>{summary === ''
                 ? 'Пусто' : summary.length > 30
                 ? summary.slice(0, 30) + '....' : summary}</p>
-            <p className='note-created-time'>{note.creationDateTime}</p>
-            <hr></hr>
+            <p className='note-created-time'>{creationTime}</p>
+            <hr/>
         </li>
     )
 }
