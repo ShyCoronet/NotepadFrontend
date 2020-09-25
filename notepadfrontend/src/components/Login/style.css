@@ -1,11 +1,60 @@
-.login-form {
-    top: 30%;
-    left: 38%;
-    position: relative;
+.login-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+.notepad-img {
+    width: 70%;
+}
+.login-image {
+    height: 100%;
+    width: 40%;
+    box-shadow: 0 0 7px #ceced0;
+}
+
+.right-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-input {
+    border-radius: 4px;
+    height: 35px;
+    width: 350px;
+    margin-bottom: 10px;
+    border: none;
+    outline: none;
+    font-size: large;
     background-color: #323337;
-    height: 30%;
-    width: 30%;
+    color: #ceced0;
+}
+
+.login-buttons-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.login-btn {
+    height: 35px;
+    font-size: large;
+    margin-right: 5px;
+    flex-grow: 1;
+}
+
+.signup-redirect-btn {
+    height: 35px;
+    font-size: large;
+    flex-grow: 1;
+}
+
+.logo {
+    color: #ceced0;
 }
