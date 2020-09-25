@@ -1,9 +1,12 @@
-import { ADD_NOTES , ADD_NOTE, SET_ACTIVE_NOTE, UPDATE_NOTE, REQUEST_FOR_DELETE_NOTE } from './types'
+import {ADD_NOTES, ADD_NOTE, SET_ACTIVE_NOTE, UPDATE_NOTE, DELETE_NOTE, SET_SORT_TYPE, SET_SEARCH_VALUE} from './types'
+import {SORT_BY_CREATION_TIME} from "../components/SortSettingsMenu/sortTypes";
 
 
 const initialState = {
     notes: [],
     activeNoteId: null,
+    noteSortPredicate: SORT_BY_CREATION_TIME,
+    searchBarValue: null
 }
 
 export const notesReducer = (state = initialState, action) => {
@@ -12,7 +15,7 @@ export const notesReducer = (state = initialState, action) => {
             return {...state, notes: action.payload}
         case ADD_NOTE:
             return {...state, notes: state.notes.concat([action.payload])}
-        case REQUEST_FOR_DELETE_NOTE:
+        case DELETE_NOTE:
             return {...state, notes: state.notes.filter(note => note.noteId !== action.payload)}
         case UPDATE_NOTE:
             return {...state, notes: state.notes.map(note => {
@@ -23,6 +26,10 @@ export const notesReducer = (state = initialState, action) => {
             })}
         case SET_ACTIVE_NOTE:
             return {...state, activeNoteId: action.payload}
+        case SET_SORT_TYPE:
+            return {...state, noteSortPredicate: action.payload}
+        case SET_SEARCH_VALUE:
+            return {...state, searchBarValue: action.payload}
         default: return state
     }
 }
