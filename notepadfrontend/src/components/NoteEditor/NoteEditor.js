@@ -30,27 +30,26 @@ export default function NoteEditor({activeNote}) {
     return(
         <div className='text-editor'>
             <div className='tool-bar'>
-                <button className='tool-btn bold' onMouseDown={(e) => {
+                <button className='btn tool-btn bold' onMouseDown={(e) => {
                     e.preventDefault()
                     toggleStyle(BOLD)
                 }}>B</button>
-                <button className='tool-btn italic' onMouseDown={(e) => {
+                <button className='btn tool-btn italic' onMouseDown={(e) => {
                     e.preventDefault()
                     toggleStyle(ITALIC)
                 }}>I</button>
-                <button className='tool-btn underline' onMouseDown={(e) => {
+                <button className='btn tool-btn underline' onMouseDown={(e) => {
                     e.preventDefault()
                     toggleStyle(UNDERLINE)
                 }}>U</button>
             </div>
             <div className='text-title'>
-                <input type='text' className='text-title-field' 
-                placeholder='Enter the title' value={editorTitleState}
-                onChange={event => {
-                    const updatedNote = {...activeNote, name: event.target.value}
-                    dispatch(updateNote(updatedNote))
-                    setEditorTitleState(event.target.value)
-                }}></input>
+                <input type='text' className='text-title-field'
+                     placeholder='Enter the title' value={editorTitleState}
+                       onChange={event => {
+                            const updatedNote = {...activeNote, name: event.target.value}
+                            dispatch(updateNote(updatedNote))
+                            setEditorTitleState(event.target.value)}}/>
             </div>
             <div className='text-box'>
                 <Editor editorState={editorTextState} onChange={state => {
