@@ -1,4 +1,4 @@
-import { fetchWithAuth } from '../../../Authentication'
+import { fetchWithAuth } from '../../Authentication'
 
 export async function requestNote() {
     const response = await fetchWithAuth('https://localhost:44321/api/note',
