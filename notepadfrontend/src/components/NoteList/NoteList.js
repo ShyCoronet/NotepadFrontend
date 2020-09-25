@@ -10,10 +10,10 @@ export default function NoteList({notes}) {
     const dispatch = useDispatch()
     const activeNoteId = useSelector(state => state.notes.activeNoteId)
 
-    return(
+    return (
         <ul className='note-list'>
             {notes.map(note => <Note key={note.noteId} id={note.noteId} note={note}
-            actived={() => dispatch(setActiveNote(note.noteId))}
+            active={() => dispatch(setActiveNote(note.noteId))}
             addedClass={activeNoteId === note.noteId ? ' active': ''}/>)}
         </ul>
     )
