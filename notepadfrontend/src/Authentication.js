@@ -43,7 +43,7 @@ export function saveTokenData(tokenData) {
     localStorage.setItem('tokenData', JSON.stringify(tokenData))
 }
 
-function getTokenDataOrDefault() {
+export function getTokenDataOrDefault() {
     let tokenData = null
 
     if (localStorage.tokenData) {
