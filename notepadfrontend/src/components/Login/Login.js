@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './style.css'
 import { useHistory } from 'react-router-dom'
 import { saveTokenData } from '../../Authentication'
+import notepad from '../../images/Notepad.png'
 
 export default function Login() {
 
@@ -28,14 +29,30 @@ export default function Login() {
         })
     }
 
+    function RedirectToSignUpPage() {
+        history.push('/registration')
+    }
+
 
     return(
-        <div className='login-form'>
-            <input type='text' value={userData.login} onChange={e => 
-                setUserData({...userData, login: e.target.value})}></input>
-            <input type='text' value={userData.password} onChange={e => 
-                setUserData({...userData, password: e.target.value})}></input>
-            <button type='submit' onClick={() => Login()}></button>
+        <div className='login-container'>
+                <img className='login-image' src={notepad}/>
+            <div className='right-container'>
+                <div>
+                    <h1 className='logo'>Notepad</h1>
+                </div>
+                <div className='login-form'>
+                    <input className='inpt login-input' type='text' value={userData.login} placeholder='Login'
+                           onChange={e => setUserData({...userData, login: e.target.value})}/>
+                    <input className='inpt login-input' type='password' value={userData.password} placeholder='Password'
+                           onChange={e => setUserData({...userData, password: e.target.value})}/>
+                    <div className='login-buttons-container'>
+                        <button className='btn login-btn' type='submit' onClick={Login}>Login</button>
+                        <button className='btn signup-redirect-btn' onClick={RedirectToSignUpPage}
+                                type='submit'>Sign Up</button>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }
