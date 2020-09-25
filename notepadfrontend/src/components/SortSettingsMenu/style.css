@@ -1,0 +1,24 @@
+.sort-button {
+    background-color: rgba(255, 255, 255, 0);
+    outline: none;
+    border: none;
+}
+
+.bi-filter-square {
+    cursor: pointer;
+}
+
+.sort-dropdown-menu {
+    position: absolute;
+    padding-left: 6px;
+}
+
+.predicate-list {
+    color: #ceced0;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: #323337;
+    width: 200px;
+    border-radius: 4px;
+}
