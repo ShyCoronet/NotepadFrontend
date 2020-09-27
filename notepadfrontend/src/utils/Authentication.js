@@ -6,7 +6,7 @@ export async function fetchWithAuth(url, options) {
         return Promise.reject(new Error('Not found jwt data'))
     }
 
-    if (!checkingTokenLifeTime(tokenData.lifeTimeInSeconds)) {
+    if (!checkTokenLifeTime(tokenData.deathTime)) {
         try {
             await refreshTokenData(tokenData.refreshToken)
             tokenData = getTokenDataOrDefault()
@@ -54,10 +54,10 @@ export function getTokenDataOrDefault() {
 }
 
 
-function checkingTokenLifeTime(lifeTime) {
+function checkTokenLifeTime(deathTime) {
     let isAlive = true
 
-    if (Date.now() >= lifeTime * 1000) {
+    if (Date.now() >= Date.parse(deathTime)) {
         isAlive = false
     }
 
