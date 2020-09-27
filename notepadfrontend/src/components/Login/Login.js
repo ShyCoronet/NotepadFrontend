@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './style.css'
 import { useHistory } from 'react-router-dom'
-import { saveTokenData } from '../../Authentication'
+import { saveTokenData } from '../../utils/Authentication'
 import notepad from '../../images/Notepad.png'
 
 export default function Login() {
@@ -30,7 +30,7 @@ export default function Login() {
     }
 
     function RedirectToSignUpPage() {
-        history.push('/registration')
+        history.push('/signup')
     }
 
 
