@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './style.css'
 import {ErrorMessage} from "../ErrorMessage/ErrorMessage";
-import {Alert} from "../Alert/Alert";
 
 
 export default function SignUp() {
