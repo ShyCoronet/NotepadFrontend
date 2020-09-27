@@ -14,7 +14,7 @@ function App() {
       <Switch>
           <PrivateRoute path='/notepad' component={Notepad}/>
           <Route path='/login' component={Login}/>
-          <Route path='/registration' component={SignUp}/>
+          <Route path='/signup' component={SignUp}/>
           <Redirect from='/' to='/notepad'/>
         </Switch>
     </div>
