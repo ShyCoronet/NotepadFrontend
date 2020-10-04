@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import './style.css'
 import { useHistory } from 'react-router-dom'
 import { saveTokenData } from '../../utils/Authentication'
-import notepad from '../../images/Notepad.png'
+import notepad from '../../images/Notepad.jpg'
 
 export default function Login() {
 
